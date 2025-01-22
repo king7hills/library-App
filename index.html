@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libary Project</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1 class="library_title">My Library</h1>
+    <div class="library_display"></div>
+
+    <dialog>
+        <button class="dialog_close">X</button>
+        <form id="add_book" method="dialog">
+            <label for="title">Title: </label>
+            <input type="text" id="title" name="add_book" autofocus>
+
+            <label for="author">Author: </label>
+            <input type="text" id="author" name="add_book">
+
+            <label for="read_status">Check if read: </label>
+            <input type="checkbox" id="read_status" name="add_book">
+
+            <button type="submit" name="add_book" id="add_book_submit">Submit</button>
+         </form>
+    </dialog>
+    <button class="library_add">Add New Book</button>
+    <script src="./library.js"></script>
+</body>
+</html>
