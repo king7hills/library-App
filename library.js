@@ -26,7 +26,7 @@ function displayBooks () {
 
     let text = '';
     for (let x in book) {
-        text += x + ': ' + book[x] + "<br>";
+        text += "<span>" + x + ': ' + book[x] + "</span>";
     };
 
     const deleteButton = document.createElement('button');
@@ -36,7 +36,15 @@ function displayBooks () {
         deleteBook(event);
     }
 
+    const readButton = document.createElement('button');
+    readButton.textContent = 'Toggle Read Status';
+    readButton.setAttribute('data-book-id', book.id);
+    readButton.onclick = function (event) {
+        toggleRead(event);
+    }
+
     p.innerHTML = text;
+    p.appendChild(readButton);
     p.appendChild(deleteButton);
     libraryDisplay.appendChild(p);
 })};
@@ -53,7 +61,7 @@ function addLibraryBook (title, author, read_status, id) {
     p.classList.add("book_entry");
     let text = '';
     for (let x in freshbook) {
-        text += x + ': ' + freshbook[x] + "<br>";
+        text += "<span>" + x + ': ' + freshbook[x] + "</span>";
     };
    
     const deleteButton = document.createElement('button');
@@ -63,7 +71,15 @@ function addLibraryBook (title, author, read_status, id) {
         deleteBook(event);
     }
 
+    const readButton = document.createElement('button');
+    readButton.textContent = 'Toggle Read Status';
+    readButton.setAttribute('data-book-id', freshbook.id);
+    readButton.onclick = function (event) {
+        toggleRead(event);
+    }
+
     p.innerHTML = text;
+    p.appendChild(readButton);
     p.appendChild(deleteButton);
     libraryDisplay.appendChild(p);
 };
@@ -75,11 +91,28 @@ function deleteBook (event) {
     myLibrary = myLibrary.filter(book => book.id != bookId);
 
     const bookElement = document.querySelector(`[data-book-id="${bookId}"]`);
-    console.log(bookElement);
     if (bookElement) {
         bookElement.remove();
-    } else console.log('Element not found for ', bookId);
+    }
 }
+
+function toggleRead (event) {
+    event.preventDefault();
+    const bookId = event.target.getAttribute('data-book-id');
+    const bookElement = document.querySelector(`[data-book-id="${bookId}"]`);
+    const readSpan = bookElement.querySelector(":nth-child(3)");
+
+    const readStatus = myLibrary.find(book => book.id == bookId);
+    if (readStatus) {
+        if (readStatus.read_status == 'I have not read it.') {
+            readStatus.read_status = 'I read it!';
+            readSpan.textContent = 'Read_status: I read it!';
+        } else if (readStatus.read_status == 'I read it!') {
+            readStatus.read_status = 'I have not read it.';
+            readSpan.textContent = 'Read_status: I have not read it.';
+        }
+    }
+};
 
 // Dialog and entry functionality
 const dialog = document.querySelector('dialog');
