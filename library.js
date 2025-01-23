@@ -1,4 +1,6 @@
-const myLibrary = [];
+// Global settings
+
+let myLibrary = [];
 
 function Book(title, author, read_status, id) {
     this.title = title;
@@ -39,13 +41,15 @@ function displayBooks () {
     libraryDisplay.appendChild(p);
 })};
 
+
+// Add books.
 function addLibraryBook (title, author, read_status, id) {
     let freshbook = new Book(title, author, read_status, id);
     myLibrary.push(freshbook);
 
     //Must create new element EACH TIME function is run
     const p = document.createElement('p');
-    p.setAttribute('data-book-id', book.id);
+    p.setAttribute('data-book-id', freshbook.id);
     p.classList.add("book_entry");
     let text = '';
     for (let x in freshbook) {
@@ -54,7 +58,7 @@ function addLibraryBook (title, author, read_status, id) {
    
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Remove Book';
-    deleteButton.setAttribute('data-book-id', book.id);
+    deleteButton.setAttribute('data-book-id', freshbook.id);
     deleteButton.onclick = function (event) {
         deleteBook(event);
     }
@@ -64,6 +68,20 @@ function addLibraryBook (title, author, read_status, id) {
     libraryDisplay.appendChild(p);
 };
 
+function deleteBook (event) {
+    event.preventDefault();
+    const bookId = event.target.getAttribute('data-book-id');
+
+    myLibrary = myLibrary.filter(book => book.id != bookId);
+
+    const bookElement = document.querySelector(`[data-book-id="${bookId}"]`);
+    console.log(bookElement);
+    if (bookElement) {
+        bookElement.remove();
+    } else console.log('Element not found for ', bookId);
+}
+
+// Dialog and entry functionality
 const dialog = document.querySelector('dialog');
 const newBookButton = document.querySelector('button.library_add');
 const closeDialog = document.querySelector('button.dialog_close');
@@ -95,6 +113,4 @@ form.addEventListener("submit", (e) => {
     form.reset();
 });
 
-function removeDOM () {
-    
-}
+displayBooks();
