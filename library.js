@@ -3,7 +3,7 @@ const myLibrary = [];
 function Book(title, author, read_status) {
     this.title = title;
     this.author = author;
-    this.readStatus = read_status;
+    this.read_status = read_status;
 };
 
 const libraryDisplay = document.querySelector('div.library_display');
@@ -26,8 +26,6 @@ function addLibraryBook (title, author, read_status) {
     p.textContent = text;
 };
 
-
-
 const dialog = document.querySelector('dialog');
 const newBookButton = document.querySelector('button.library_add');
 const closeDialog = document.querySelector('button.dialog_close');
@@ -40,12 +38,25 @@ closeDialog.addEventListener('click', () => {
     dialog.close();
 });
 
-const addBook = document.querySelector('button#add_book_submit');
+const form = document.querySelector('form');
 
-addBook.addEventListener("submit", (e) => {
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    formStuff = new FormData(form);
+    let newTitle = formStuff.get('Title');
+    let newAuthor = formStuff.get('Author');
+    let newStatus = formStuff.get('Read Yet?');
 
-    let newTitle = document.querySelector('input#title');
-    let newAuthor = document.querySelector('input#author');
-    let newStatus = document.querySelector('input#read_status');
+    if (newStatus == 'on') {
+        newStatus = 'I read it!';
+    } else newStatus = 'I have not read it.';
+        
     addLibraryBook(newTitle, newAuthor, newStatus);
+    dialog.close();
+    form.reset();
 });
+
+
+// let newTitle = document.querySelector('input#title');
+//     let newAuthor = document.querySelector('input#author');
+//     let newStatus = document.querySelector('input#read_status');
