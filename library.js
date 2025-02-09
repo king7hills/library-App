@@ -94,7 +94,7 @@ function deleteBook (event) {
     if (bookElement) {
         bookElement.remove();
     }
-}
+};
 
 function toggleRead (event) {
     event.preventDefault();
